@@ -1,1 +1,1 @@
-# sketch-colorization-based-on-reference-structure
+# Sketch Colorization based on Reference and Structure
