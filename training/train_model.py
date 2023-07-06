@@ -109,7 +109,7 @@ def training_loop(net):
         start_val_time = time.time()
 
         # Execute validation and return metrics (SNR, SSIM and FID)
-        val_metrics_results = validation_loop(net, epoch)
+        val_metrics_results = validation_loop(net)
         # Append validation results
         for k,v in val_metrics_results.items():
             val_results[k].append(v)
