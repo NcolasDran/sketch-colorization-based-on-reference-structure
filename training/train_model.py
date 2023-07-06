@@ -91,7 +91,7 @@ def training_loop(net):
         #   Train one Epoch
         #---------------------
         batch_losses = training_epoch(image_dataset, net,
-                                      optimizer_net, epoch)
+                                      optimizer_net)
 
         lr_scheduler_net.step()
 
