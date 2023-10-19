@@ -9,6 +9,7 @@ This is an unofficial Pytorch implementation of the paper `Reference-guided stru
   - [Fine-Tune Model](#fine-tune-model)
 - [Datasets](#datasets)
 - [Requirements](#requirements)
+- [Execution](#execution)
 - [Results Main Model](#results-main-model)
 - [Results Fine-Tune Model](#results-fine-tune-model)
 
@@ -47,6 +48,46 @@ For the fine-tune model, the way in which colors are extracted and combined was 
 - Pytorch >= 1.6 (torch and torchvision)
 - Numpy
 - [PIQ](https://github.com/photosynthesis-team/piq) (for evaluation metrics)
+
+## Execution
+
+1. Download the desired dataset and extract it to its corresponding folder in `./data`.
+2. Change the settings for training or testing the model in `./configs/training.cfg`.
+3. Run `main.py` script.
+
+The `training.cfg` file manages the instructions for the execution of the code, it contains several parameters such as the batch size, learning rate and other constants. To train or test the model, the keys `train_model` and `test_model` in **[Commons]**, must be set to *True* or *False*, depending on the case. For the Main Model or the Fine-Tune Model, more parameters are required.
+
+Configuration for the Main Model:
+
+```bash
+[Training]
+dataset_name = anime_sketch_colorization_pair
+split_img = True
+fixed_size_imgs = True
+fine_tune = False
+
+[Testing]
+dataset_name = anime_sketch_colorization_pair
+split_img = True
+fixed_size_imgs = True
+```
+
+Configuration for the Fine-Tune Model:
+
+```bash
+[Training]
+dataset_name = opm_colorization_dataset
+split_img = False
+fixed_size_imgs = False
+fine_tune = True
+
+[Testing]
+dataset_name = opm_colorization_dataset
+split_img = False
+fixed_size_imgs = False
+```
+
+For training the Main Model, the learning rate was set to 1e-04, but for training the Fine-Tune Model, the best results were observed using a learning rate of 1e-03.
 
 ## Results Main Model
 
