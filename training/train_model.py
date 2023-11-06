@@ -32,6 +32,12 @@ SPLIT_BOOL = config.getboolean('Training', 'split_img')
 RANDOM_TRANSFORM = config.getboolean('Training', 'random_transform')
 FIXED_SIZE_IMGS = config.getboolean('Training', 'fixed_size_imgs')
 
+if DATASET_NAME == 'anime_sketch_colorization_pair':
+    # For this dataset there is no validation fase because 
+    # the validation data is used for the testing fase
+    VALIDATION_BOOL = False
+else:
+    VALIDATION_BOOL = True
 
 # _____________________________________________________________________________
 # Execution of the model training  
@@ -106,17 +112,18 @@ def training_loop(net):
         #--------------------
         #   Validation loop
         #--------------------
-        start_val_time = time.time()
+        if VALIDATION_BOOL:
+            start_val_time = time.time()
 
-        # Execute validation and return metrics (SNR, SSIM and FID)
-        val_metrics_results = validation_loop(net)
-        # Append validation results
-        for k,v in val_metrics_results.items():
-            val_results[k].append(v)
+            # Execute validation and return metrics (SNR, SSIM and FID)
+            val_metrics_results = validation_loop(net)
+            # Append validation results
+            for k,v in val_metrics_results.items():
+                val_results[k].append(v)
 
-        # Display in terminal the validation results
-        logging.critical(m.val_results(str(epoch), val_results,
-                         round(time.time() - start_val_time)))
+            # Display in terminal the validation results
+            logging.critical(m.val_results(str(epoch), val_results,
+                             round(time.time() - start_val_time)))
 
         # Save checkpoint
         if SAVE_CHECKPOINT: 

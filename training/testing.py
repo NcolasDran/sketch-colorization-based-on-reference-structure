@@ -32,6 +32,12 @@ WORKERS_DATALOADER = config.getint('Commons', 'workers_dataloader')
 FIXED_SIZE_IMGS = config.getboolean('Testing', 'fixed_size_imgs')
 TEST_IMG_SIZE = config.getint('Testing', 'test_img_size')
 
+if DATASET_NAME == 'anime_sketch_colorization_pair':
+    # This dataset only has validation data, so this images are 
+    # used for the testing fase.
+    PATH_DATA = 'data/' + DATASET_NAME + '/val/'
+else:
+    PATH_DATA = 'data/' + DATASET_NAME + '/test/'
 
 # _____________________________________________________________________________
 class CustomDataFID(torch.utils.data.Dataset):
@@ -65,8 +71,7 @@ def testing_loop(net, device):
     #-------------------------
     #   Load testing data
     #-------------------------
-    path_data = 'data/' + DATASET_NAME + '/test/'
-    image_dataset = CustomImgDataset(path_data, FIXED_SIZE_IMGS, split=SPLIT_BOOL, 
+    image_dataset = CustomImgDataset(PATH_DATA, FIXED_SIZE_IMGS, split=SPLIT_BOOL, 
                                      random_flip=False)
 
     imgs_data_loader = DataLoader(image_dataset, batch_size=BATCH_SIZE, 
